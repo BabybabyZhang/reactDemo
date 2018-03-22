@@ -1,6 +1,11 @@
 import dva from 'dva';
 import './index.css';
-import { Main } from './main';
+// import loading from 'dva-loading'
+// import React, { Component } from 'react'; 
+// import { Layout } from './layout';
+// import API from './utils/request'
+
+// console.log(API.get('/operator/queryList'));
 // 1. Initialize
 const app = dva({
   	initialState: {
@@ -13,7 +18,7 @@ const app = dva({
 
 // 2. Plugins
 // app.use({});
-
+//app.use(loading())
 // 3. Model
 // app.model(require('./models/example').default);
 app.model(require('./models/product').default)

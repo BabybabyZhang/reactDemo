@@ -8,10 +8,13 @@
   },
   "dependencies": {
     "antd": "^3.3.0",
+    "axios": "^0.18.0",
     "babel-plugin-import": "^1.6.7",
     "dva": "^2.1.0",
+    "dva-loading": "^1.0.4",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
     "babel-plugin-dva-hmr": "^0.3.2",
