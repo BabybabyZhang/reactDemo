@@ -1,0 +1,93 @@
+.divWrap{
+	width:100%;
+	height:100%;
+}
+.wrap{
+	background-color: #fff;
+	padding:30px;
+	padding-bottom: 0;
+}
+.wrap h3{
+	line-height: 50px;
+	background-color: #e9e9e9;
+	text-indent: 20px;
+	margin:0;
+}
+.formWrap{
+	padding:20px;
+	border:2px solid #f2f2f2;
+	border-top:none;
+}
+.imgItem{
+	display: inline-block;
+	width:140px;
+	height:140px;
+	margin:0 20px;
+	margin-bottom: 20px;
+}
+.imgItem img{
+	max-width:100%;
+	height: 100%;
+}
+.item{
+	line-height: 40px;
+}
+.item p{
+	display: inline-block;
+}
+.formWrap input{
+	border:none;
+	background-color: #fff;
+	color:#666;
+	cursor: auto;
+}
+
+.loading{
+	margin:auto;
+	width:60px;
+	height: 46px;
+	position: fixed;
+	right:50%;
+	top:50%;
+	margin-right:-100px;
+}
+.hide {
+	display: none;
+}
+.show_img{
+    width:100%;
+    height:100%;
+}
+.imgMask{
+	position: fixed;
+	left:0;
+	top:0;
+	right: 0;
+	bottom: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 9000;
+}
+.imgWrap{
+	position: fixed;
+	display:block;
+	left:0;
+	right: 0;
+	top:0;
+    margin: 0 auto;
+    z-index: 9001;
+}
+.imgWrap img{
+    width:100%;
+    height: 100%;
+}
+.close{
+    width: 30px;
+    height:30px;
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    background: url(../../assets/img/close.png) no-repeat center;
+    background-size:100% 100%;
+    z-index: 9001;
+    cursor: pointer;
+}

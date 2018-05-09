@@ -1,26 +1,46 @@
 import React from 'react';
-import { Router, Route,Redirect, } from 'dva/router';
-import IndexPage from './routes/IndexPage';
-import Products from './routes/Products';
+import { Router, Route,Redirect } from 'dva/router';
 import Home from './layout';
-import {One,Two,Three,Four,HouseList,HouseExamineList,Login,Working,Worked,MyWork} from './components';
+import {
+	loanDetail,
+	LoanList,
+	HouseList,
+	HouseExamineList,
+	HouseExamine,
+	Login,
+	Working,
+	Worked,
+	MyWork,
+	UserList,
+	RoleList,
+	HouseResourceList,
+	HouseResourceDetail,
+	RentList,
+	RentTable,
+	RenterList
+} from './components';
 
 export default ({history}) => {
     return (
       <Router history={history}>
           <div>
               <Route path="/login"  component={Login} />
-              <Route path="/home"  component={Home}>
-                  <Route path="/products" component={Products} />
-                  <Route path="/indexPage" component={IndexPage} />
-                  <Route path='/one' component={One}/>
-                  <Route path='/two' component={Two}/>
-                  <Route path='/three' component={Three}/>
-                  <Route path='/four' component={Four}/>
-                  <Route path='/houseAdministration/houseList' component={HouseList} />
+              <Route path="/home"  component={Home}  >
+                  <Route path='/houseAdministration/houseList/:id' component={HouseList} />
+                   <Route path='/houseAdministration/houseExamineList/:id' component={HouseExamineList} />
                   <Route path='/work/working' component={Working} />
                   <Route path='/work/worked' component={Worked} />
                   <Route path='/work/mywork' component={MyWork} />
+                  <Route path='/os/roleList' component={RoleList} />
+                  <Route path='/os/userList' component={UserList} />
+                  <Route path='/houseResources/houseResourceList' component={HouseResourceList} />
+                  <Route path='/houseResources/houseResourceDetail' component={HouseResourceDetail} />
+                  <Route path='/rent/rentTable' component={RentTable} />
+                  <Route path='/rent/rentList' component={RentList} />
+                  <Route path='/renter/renterList' component={RenterList} />
+                  <Route path='/houseAdministration/houseExamine' component={HouseExamine} />
+                  <Route path='/loan/loanList' component={LoanList} />
+                  <Route path='/loan/loanDetail' component={loanDetail} />
               </Route>
               <Route exact path="/" render={() => (<Redirect to="/home"/>)}></Route>
           </div>

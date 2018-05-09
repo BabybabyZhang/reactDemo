@@ -1,238 +1,143 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import {Menu, Icon } from 'antd';
 import {Link} from 'react-router-dom'
-
+import API from '../../api';
+import styles from '../index.css';
+import '../../assets/font/iconfont.css';
+import css from '../../index.less'
 const SubMenu = Menu.SubMenu;
-// import IndexPage from '../routes/IndexPage';
-// import Products from '../routes/Products';
+
+
 
 export default class Silder extends Component {
-  rootSubmenuKeys = ['0', '1', '2','3','4','5','6','7'];
-  state = {
-    openKeys: ['0'],
-    navArr:[
-      {
-          "path":"/one",
-          "name":"用户管理",
-          "component":"User",
-          "iconCls":'el-icon-user',
-          "iconImg":"",
-          "leaf":true,//说明没有子菜单
-          'hidden':false,
-          'id':'0'
-      },
-      {
-          "path":"/two",
-          "name":"房源管理",
-          "component":"FangyuanList",
-          "iconCls":'el-icon-fangyuan',
-          "iconImg":"",
-          "leaf":true,
-          'id':'1'
-      },
-      {
-          "path":"/three",
-          "name":"租赁管理",
-          "component":"ZujinList",
-          "iconCls":'el-icon-zujin',
-          "iconImg":"",
-          "leaf":true,
-          'id':'2'
-      },
-      {
-          "path":"/",
-          "name":"房东管理",
-          "iconCls":'el-icon-daikuan',
-          "iconImg":"",
-          "leaf":false,
-          'id':'3',
-          "children":[
-              {
-                  "path":"/houseAdministration/houseList",
-                  "component":"ShenheOrder",
-                  "leaf":true,
-                  "name":"房东表单",
-                  'id':'30'
-              },
-              {
-                  "path":"/houseAdministration/houseExamineList",
-                  "component":"TongguoOrder",
-                  "leaf":true,
-                  "name":"房东审核表单",
-                  'id':'31'
-              },
-              {
-                  "path":"/notongguoorder",
-                  "component":"NotongguoOrder",
-                  "leaf":true,
-                  "name":"未通过列表",
-                  'id':'32'
-              },
-              {
-                  "path":"/fangkuanorder",
-                  "component":"FangkuanOrder",
-                  "leaf":true,
-                  "name":"放款列表",
-                  'id':'33'
-              },
-              {
-                  "path":"/huankuanorder",
-                  "component":"HuankuanOrder",
-                  "leaf":true,
-                  "name":"还款列表",
-                  'id':'34'
-              },
-              {
-                  "path":"/yuqiorder",
-                  "component":"YuqiOrder",
-                  "leaf":true,
-                  "name":"逾期列表",
-                  'id':'35'
-              }
-          ]
-      },
-      {
-          "path":"/",
-          "name":"我的工作",
-          "iconCls":'el-icon-yunying',
-          "iconImg":"",
-          "leaf":false,
-          'id':'4',
-          "children":[
-              {
-                  "path":"/work/working",
-                  "component":"",
-                  "leaf":true,
-                  "name":"代办的工作",
-                  'id':'40'
-              },
-              {
-                  "path":"/work/worked",
-                  "component":"",
-                  "leaf":true,
-                  "name":"已完成的工作",
-                  'id':'41'
-              },
-              {
-                  "path":"/work/mywork",
-                  "component":"",
-                  "leaf":true,
-                  "name":"我发起的工作",
-                  'id':'42'
-              }
-          ]
-      },
-      {
-          "path":"/finance",
-          "name":"财务管理",
-          "component":"Finance",
-          "iconCls":'el-icon-caiwu',
-          "iconImg":"",
-          "leaf":true,
-          'hidden':false,
-          'id':'5'
-      },
-      {
-          "path":"/datacount",
-          "name":"数据统计",
-          "component":"DataCount",
-          "iconCls":'el-icon-data',
-          "iconImg":"",
-          "leaf":true,
-          'id':'6'
-      },
-      {
-          "path":"/",
-          "iconCls":'el-icon-os',
-          "iconImg":"",
-          "name":"系统管理",
-          "leaf":false,
-          'id':'7',
-          "children":[
-              {
-                  "path":"/rolelist",
-                  "component":"RoleList",
-                  "leaf":true,
-                  "name":"人员管理",
-                  'id':'70'
-              },
-              {
-                  "path":"/role",
-                  "component":"Role",
-                  "leaf":true,
-                  "name":"角色管理",
-                  'id':'71'
-              }
-          ]
-      }
-    ],
-  };
-  onOpenChange = (openKeys) => {
-      const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
-      if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-        this.setState({ openKeys });
-      } else {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data:[],
+            openKeys:[],
+            current: '14',
+            openItemKeys:[]
+        }
+        this.rootSubmenuKeys = [];
+    }
+    componentWillMount(){
+        /*判断是否登录*/
+        if(window.sessionStorage.getItem('loginMsg')){
+            /*若已获取菜单接口，则去本地数据*/
+            if(window.sessionStorage.getItem('MenuList')){
+                let list = JSON.parse(window.sessionStorage.getItem('MenuList'));
+                this.setState({
+                    data:list
+                })
+                this.setRootSubmenuKeys(list)
+            }else{
+                let obj = JSON.parse(window.sessionStorage.getItem('loginMsg'));
+                let userObj = {
+                    userId:obj.id
+                }
+                this.getList(userObj)
+            }
+            if(window.sessionStorage.getItem('openKeys')){
+                this.setState({
+                    openKeys:JSON.parse(window.sessionStorage.getItem('openKeys'))
+                })
+            }
+            if(window.sessionStorage.getItem('openItemKeys')){
+                this.setState({
+                    openItemKeys:JSON.parse(window.sessionStorage.getItem('openItemKeys'))
+                },)
+            }     
+        }   
+    }
+    
+    /*获取菜单数量*/
+    setRootSubmenuKeys = (arr) => {
+        this.rootSubmenuKeys = [];
+        let len = arr.length;
+        for(let i = 0; i < len; i++){
+            this.rootSubmenuKeys.push(arr[i].id);
+        }
+    }
+    /*获取菜单接口*/
+    getList = (obj) => {
+      let _this = this;
+      API.MenuList(obj)
+        .then(res => {
+            if((res.status == 200) && (res.data.success)){
+              let list = res.data.data;
+              _this.setState({
+                data:list
+              })
+              this.setRootSubmenuKeys(list)
+              window.sessionStorage.setItem('MenuList',JSON.stringify(list))
+            }
+        }).catch(error => {
+			
+        })
+    }
+    onOpenChange = (openKeys) => {
+    	
+        const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+        //菜单打开时，latestOpenKey有值
+        if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+            this.setState({ openKeys });
+        }else {
+            this.setState({
+                openKeys: latestOpenKey ? [latestOpenKey] : [],
+            });
+        };
+        if(latestOpenKey){
+            let arr = [];
+            arr.push(latestOpenKey)
+            window.sessionStorage.setItem('openKeys',JSON.stringify(arr))
+        }
+    }
+    handleClick = (e) => {
+	    this.setState({
+	      current: e.key,
+	    },()=>{
+	    	//console.log(this.state);
+	    });
+	}
+    select = (item, key, selectedKeys) => {
         this.setState({
-          openKeys: latestOpenKey ? [latestOpenKey] : [],
-        });
-      }
-  }
-  setMenu(navArr){
-    return  navArr.map((item) => {
-        if(item.leaf) {
-          return ( <Menu.Item key={item.id}><Link to={`/home${item.path}`}>{item.name}</Link></Menu.Item> )
-        }else{
-          return ( <SubMenu key={item.id}
-                          title={<span><Icon type="appstore"/><span>{item.name}</span></span>}>
-                      {this.setMenu(item.children)}
-            </SubMenu> )
-        }
-      })
-  }
-  render() {
-    return (
-      <Menu
-        mode="inline"
-        openKeys={this.state.openKeys}
-        onOpenChange={this.onOpenChange}
-        //style={{ width: 256 }}
-      >
-        {
-          this.setMenu(this.state.navArr)
-        }
-      </Menu>
-    );
+            openItemKeys:item.key?[item.key]:[]
+        })
+        let arr = [];
+        arr.push(item.key)
+        window.sessionStorage.setItem('openItemKeys',JSON.stringify(arr))
+    }
+
+    /*设置菜单*/
+    setMenu(arr){
+        return  arr.map((item) => {
+            if(item.leaf) {
+              return ( <Menu.Item key={item.id} style={{height:'60px',lineHeight:'60px',fontSize:'16px'}} className={styles.item} ><Icon className = {styles.itemIcon} type = '' /><Link to={`/home${item.path}`}>{item.name}</Link></Menu.Item> )
+            }else{
+              return ( <SubMenu key={item.id} className={styles.menus} style={{borderRadius:'4px'}}
+                          title={<span><Icon className = {styles[item.iconcls]} type = '' /><span>{item.name}</span></span>}>
+                          {this.setMenu(item.children)}
+                </SubMenu> )
+            }
+        })
+    }
+    render() {
+        return (
+            <Menu
+                mode="inline"
+                openKeys={this.state.openKeys}
+                onOpenChange={this.onOpenChange}
+                onClick={this.handleClick}
+                className = {css.customSelect}
+                onSelect={this.select}
+                defaultOpenKeys={this.state.openKeys}
+                defaultSelectedKeys={this.state.openItemKeys}
+            >
+            {
+                this.setMenu(this.state.data)
+            }
+            </Menu>
+      );
   }
 }
-
-
-
-// <div>
-//  <ul>
-//    <li><Link to='/home/one'>第一个菜单</Link></li>
-//    <li><Link to='/home/two'>第二个菜单</Link></li>
-//    <li><Link to='/home/three'>第三个菜单</Link></li>
-//    <li><Link to='/home/four'>第四个菜单</Link></li>
-//  </ul>
-// </div>
-
-// <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Navigation One</span></span>}>
-//           <Menu.Item key="1">Option 1</Menu.Item>
-//           <Menu.Item key="2">Option 2</Menu.Item>
-//           <Menu.Item key="3">Option 3</Menu.Item>
-//           <Menu.Item key="4">Option 4</Menu.Item>
-//         </SubMenu>
-//         <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>Navigation Two</span></span>}>
-//           <Menu.Item key="5">Option 5</Menu.Item>
-//           <Menu.Item key="6">Option 6</Menu.Item>
-//           <SubMenu key="sub3" title="Submenu">
-//             <Menu.Item key="7">Option 7</Menu.Item>
-//             <Menu.Item key="8">Option 8</Menu.Item>
-//           </SubMenu>
-//         </SubMenu>
-//         <SubMenu key="sub4" title={<span><Icon type="setting" /><span>Navigation Three</span></span>}>
-//           <Menu.Item key="9">Option 9</Menu.Item>
-//           <Menu.Item key="10">Option 10</Menu.Item>
-//           <Menu.Item key="11">Option 11</Menu.Item>
-//           <Menu.Item key="12">Option 12</Menu.Item>
-//         </SubMenu>

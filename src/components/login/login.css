@@ -1,0 +1,87 @@
+.login {
+	padding: 0px 45px;
+	width:350px;
+	height:400px;
+	float:right;
+	margin-top: 130px;
+	border-radius: 5px;
+	margin-right: 30px;
+	background-color: #fff;
+	box-sizing: border-box;
+}
+body{
+	background-color: #1890FF !important;
+}
+.btnWrap{
+	text-align:center;
+}
+.main{
+	width:100%;
+	height: 100%;
+	overflow: hidden;
+	position: fixed;
+	background: url(../../assets/img/login-bg.png) no-repeat center;
+	/*background-size:cover ;*/
+}
+.content_main{
+	width: 1200px;
+	margin: 0 auto;
+}
+.login_img{
+	width: 262px;
+	height: 42px;
+	display: block;
+	margin: 0 auto;
+	margin-top: 70px;
+	margin-bottom: 30px;
+}
+.chenck{
+	color:#a2a0a0;
+	font-size: 18px;
+	font-family: "微软雅黑";
+	text-align: center;
+    display: block;
+    margin-top: 15px;
+}
+.hello{
+    font-size: 16px;
+    color: #fff;
+    font-family: "\5FAE\8F6F\96C5\9ED1";
+    text-align: center;
+    padding-top: 30px;
+}
+.text{
+	color:#b0b0b0;
+	font-size: 16px;
+	font-family: "微软雅黑";
+	text-align: center;
+	margin-top:15px;
+	margin-bottom: 15px;
+}
+.link{
+	color:#589bff;
+}
+.top{
+	width: 1200px;
+	height: 130px;
+	margin: 0 auto;
+	padding-top: 30px;
+}
+.content{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+@media only screen and (max-width:1440px ) {
+	.login{
+	    height: 350px;
+	    margin-top: 50px;
+	}
+    .login_img{
+    	margin-top: 30px;
+    	margin-bottom: 30px;
+    }
+}
+
+
+

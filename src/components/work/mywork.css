@@ -1,0 +1,40 @@
+.formWrap{
+	background-color: #fff;
+	padding:30px;
+	margin-bottom:20px;
+}
+.formWrap .ant-advanced-search-form {
+  padding: 24px;
+  background: #fbfbfb;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+}
+.formWrap .ant-advanced-search-form .ant-form-item {
+  display: flex;
+}
+.formWrap .ant-advanced-search-form .ant-form-item-control-wrapper {
+  flex: 1;
+}
+.tableWrap{
+	background-color: #fff;
+	padding:30px;
+}
+.rentTable{
+	background-color: #fff;
+	padding:20px;
+}
+/* .tableWrapChild .ant-table-pagination.ant-pagination{
+	text-align: center;
+	float: none!important;
+}
+.tableWrapChild .editable-add-btn{
+	margin-bottom:20px;
+} */
+.btnWrap button{
+	border:none;
+	background-color: transparent;
+	cursor: pointer;
+}
+.btnWrap button:nth-of-type(2){
+	margin-right:20px;
+}
